@@ -41,7 +41,7 @@ This section describes the steps to generate and run the necessasry experiments.
 
 ### 2.1 Preparing the multi-threaded instruction traces
 
-We prepared the instruction traces captured by Intel's PIN tool for the workloads we used in the paper. Download the traces from this [link](https://drive.google.com/drive/folders/1Rzdl-x3qfRp3hoL-K0OW_Tq6CuxIYcp0?usp=sharing). After uncompressing, make sure to put the ``skybyte_new_traces`` folder and the codebase (the ``SkyByte-Artifact`` folder) in the same directory. 
+We prepared the instruction traces captured by Intel's PIN tool for the workloads we used in the paper. Download the traces from Zenodo (TBD). After uncompressing, make sure to put the ``skybyte_new_traces`` folder and the codebase (the ``SkyByte-Artifact`` folder) in the same directory. 
 
 ```bash
 the_outer_directory
