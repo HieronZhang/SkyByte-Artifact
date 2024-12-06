@@ -1,0 +1,43 @@
+Base-CSSD|SkyByte-P|SkyByte-W|SkyByte-WP|SkyByte-Full
+
+bc    
+0.5GB             nan            nan            nan            nan            nan
+1GB               nan            nan            nan            nan            nan
+2GB               nan            nan  717284871.000  267408355.000            nan
+4GB               nan            nan            nan            nan            nan
+8GB               nan            nan            nan            nan            nan
+
+radix 
+0.5GB           0.000  846034496.000            nan            nan            nan
+1GB             0.000  846034496.000            nan            nan            nan
+2GB             0.000  846034496.000            nan  891989696.000            nan
+4GB    1651110500.000  671996196.000            nan            nan            nan
+8GB               nan            nan            nan            nan            nan
+
+srad  
+0.5GB             nan            nan            nan            nan            nan
+1GB               nan            nan            nan            nan            nan
+2GB               nan            nan  450468675.000  435227103.000            nan
+4GB               nan            nan            nan            nan            nan
+8GB               nan            nan            nan            nan            nan
+
+tpcc  
+0.5GB           0.000            nan            nan            nan            nan
+1GB             0.000            nan            nan            nan            nan
+2GB             0.000            nan  148388366.000  120460641.000            nan
+4GB               nan            nan            nan            nan            nan
+8GB               nan            nan            nan            nan            nan
+
+ycsb-a
+0.5GB           0.000            nan          0.000            nan            nan
+1GB             0.000            nan          0.000            nan            nan
+2GB             0.000            nan 1398753854.000  984321932.000            nan
+4GB               nan            nan          0.000            nan            nan
+8GB               nan            nan          0.000            nan            nan
+
+ycsb-b
+0.5GB  5739564084.000 1556860340.000 1675559240.000 1335060800.000          0.000
+1GB    5954018804.000 1502235060.000 1669476100.000 1324914860.000  966080207.000
+2GB    5122240832.000 1261582014.000 1661563220.000 1315698980.000  949965083.000
+4GB             0.000 1001645122.000 1590129500.000 1022920334.000          0.000
+8GB    3123069774.000  842708222.000 1446141342.000          0.000  784509847.000
