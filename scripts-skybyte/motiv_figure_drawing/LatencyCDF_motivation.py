@@ -25,28 +25,29 @@ mpl.rcParams.update({'font.size': 16})
 mpl.rcParams.update({'font.family': 'serif'})
 
 
-output_dir = "../../output-ap10/"
+output_dir = "../../output/"
 
-workloads = [
-    # "bfs-4-parsed",
-    "bc-parsed",
-    "dlrm-small",
-    "radix-parsed",
-    "ycsb-parsed",
-    # "tpcc-large",
-    # "barnes-4-small",
-    # "srad-4-small",
+workloads_baseType3s = [
+    "bc-8-baseType3",
+    "bfs-dense-8-baseType3",
+    "srad-8-baseType3",
+    "tpcc-8-baseType3",
 ]
 
+
+workloads_DRAMonlys = [
+    "bc-8-DRAM-only-DRAM",
+    "bfs-dense-8-DRAM-only-DRAM",
+    "srad-8-DRAM-only-DRAM",
+    "tpcc-8-DRAM-only-DRAM",
+]
+
+
 workload_names = [
-    # "bfs-dense",
     "bc",
-    "dlrm",
-    "radix",
-    "ycsb",
-    # "tpcc",
-    # "barnes",
-    # "srad",
+    "bfs-dense",
+    "srad",
+    "tpcc",
 ]
 
 workload_x_lims = [
@@ -72,16 +73,16 @@ workload_y_lims = [
 ]
 
 
-def read_ltc_d(data_dir_path :str) -> tuple[dict[int, int], dict[int, int]]:
+def read_ltc_d(data_dir_path :str, DRAM_dir_path :str) -> tuple[dict[int, int], dict[int, int]]:
     """Returns {lat_range: count} for DRAM, CXL-SSD"""
 
     with open(data_dir_path, "r") as f:
         lines = f.readlines()
 
     lat_cdf_timestamp_lines = [l for l in lines if l.startswith("Latency_CDF_Timestamp:")]
-    assert len(lat_cdf_timestamp_lines) == 2, lat_cdf_timestamp_lines
+    assert len(lat_cdf_timestamp_lines) == 1, lat_cdf_timestamp_lines
     lat_cdf_data_lines = [l for l in lines if l.startswith("Latency_CDF_Data:")]
-    assert len(lat_cdf_data_lines) == 2, lat_cdf_data_lines
+    assert len(lat_cdf_data_lines) == 1, lat_cdf_data_lines
 
     lat_cdf_timestamps = [
         [int(x) for x in timestamps.strip()[len("Latency_CDF_Timestamp:"):].strip().split()]
@@ -92,16 +93,39 @@ def read_ltc_d(data_dir_path :str) -> tuple[dict[int, int], dict[int, int]]:
         for datas in lat_cdf_data_lines
     ]
     assert len(lat_cdf_timestamps[0]) == len(lat_cdf_datas[0])
-    assert len(lat_cdf_timestamps[1]) == len(lat_cdf_datas[1])
+    # assert len(lat_cdf_timestamps[1]) == len(lat_cdf_datas[1])
 
+    cxlssd_dict = {
+        timestamp: count
+        for timestamp, count in zip(lat_cdf_timestamps[0], lat_cdf_datas[0])
+    }
+    
+    
+    with open(DRAM_dir_path, "r") as f:
+        lines = f.readlines()
+
+    lat_cdf_timestamp_lines = [l for l in lines if l.startswith("Latency_CDF_Timestamp:")]
+    assert len(lat_cdf_timestamp_lines) == 1, lat_cdf_timestamp_lines
+    lat_cdf_data_lines = [l for l in lines if l.startswith("Latency_CDF_Data:")]
+    assert len(lat_cdf_data_lines) == 1, lat_cdf_data_lines
+
+    lat_cdf_timestamps = [
+        [int(x) for x in timestamps.strip()[len("Latency_CDF_Timestamp:"):].strip().split()]
+        for timestamps in lat_cdf_timestamp_lines
+    ]
+    lat_cdf_datas = [
+        [int(x) for x in datas.strip()[len("Latency_CDF_Data:"):].strip().split()]
+        for datas in lat_cdf_data_lines
+    ]
+    assert len(lat_cdf_timestamps[0]) == len(lat_cdf_datas[0])
+    # assert len(lat_cdf_timestamps[1]) == len(lat_cdf_datas[1])
+    
     dram_dict = {
         timestamp: count
         for timestamp, count in zip(lat_cdf_timestamps[0], lat_cdf_datas[0])
     }
-    cxlssd_dict = {
-        timestamp: count
-        for timestamp, count in zip(lat_cdf_timestamps[1], lat_cdf_datas[1])
-    }
+    
+    
     # print(f"{data_dir_path}: DRAM: {len(dram_dict)}, CXL-SSD: {len(cxlssd_dict)}")
 
     return dram_dict, cxlssd_dict
@@ -125,7 +149,7 @@ def plot_lat_cdf(
         counts = counts / counts[-1]
         return bins, counts
     
-    def plot_cdf_helper(lat_dict, color, label):
+    def plot_cdf_helper(lat_dict, color, label, linestyle='-'):
         bins, counts = get_cdf_data(lat_dict)
         ax.plot(
             counts,
@@ -133,9 +157,10 @@ def plot_lat_cdf(
             linewidth=4,
             color=color,
             label=label,
+            linestyle=linestyle, 
         )
 
-    plot_cdf_helper(dram_dict, "blue", "DRAM")
+    plot_cdf_helper(dram_dict, "blue", "DRAM", linestyle='--')
     plot_cdf_helper(cxlssd_dict, "red", "CXL-SSD")
     
     ax.set_yscale("log")
@@ -182,8 +207,10 @@ def main():
     for bm_idx, bm_name in enumerate(workload_names):
         ax = axs[bm_idx]
 
-        data_file = output_dir + workloads[bm_idx]
-        lat_dicts = read_ltc_d(data_file)
+        baseline_data_file = output_dir + workloads_baseType3s[bm_idx]
+        DRAM_data_file = output_dir + workloads_DRAMonlys[bm_idx]
+        
+        lat_dicts = read_ltc_d(baseline_data_file, DRAM_data_file)
         plot_lat_cdf(
             lat_dicts,
             bm_name,

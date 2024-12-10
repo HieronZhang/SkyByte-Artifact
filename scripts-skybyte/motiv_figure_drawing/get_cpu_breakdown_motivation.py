@@ -2,9 +2,10 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-output_dir = "../../output-ap10/"
+output_dir = "../../output/"
 
-workloads = ["bc-parsed", "bfs-dense-4-200M-baseType3", "dlrm-large", "radix-parsed", "srad-4-small", "tpcc-large", "ycsb-large"]
+workload_baseType3s = ["bc-8-baseType3", "bfs-dense-8-baseType3", "dlrm-8-baseType3", "radix-8-baseType3", "srad-8-baseType3", "tpcc-8-baseType3", "ycsb-8-baseType3"]
+workload_dram_onlys = ["bc-8-DRAM-only-DRAM", "bfs-dense-8-DRAM-only-DRAM", "dlrm-8-DRAM-only-DRAM", "radix-8-DRAM-only-DRAM", "srad-8-DRAM-only-DRAM", "tpcc-8-DRAM-only-DRAM", "ycsb-8-DRAM-only-DRAM"]
 
 workload_names = ["bc", "bfs-dense", "dlrm", "radix", "srad", "tpcc", "ycsb"]
 
@@ -12,7 +13,7 @@ workload_names = ["bc", "bfs-dense", "dlrm", "radix", "srad", "tpcc", "ycsb"]
 
 # workload_names = ["bfs-twitter", "bc-twitter", "dlrm-training", "radix", "ycsb-nstore", "tpcc-nstore"]
 
-cores = ["Core 0", "Core 1", "Core 2", "Core 3"]
+cores = ["Core 0", "Core 1", "Core 2", "Core 3", "Core 4", "Core 5", "Core 6", "Core 7"]
 
 
 
@@ -32,16 +33,52 @@ fout_mem.write("DRAM | CXL-SSD\n\n")
 # fout_others.write("DRAM | CXL-SSD\n\n")
 
 
-for i in range(len(workloads)):
+for i in range(len(workload_baseType3s)):
     fout_compute.write(workload_names[i]+"\n")
     fout_mem.write(workload_names[i]+"\n")
     # fout_others.write(workload_names[i]+"\n")
     # for j in range(len(designtypes)):
-    data_file = output_dir + workloads[i]
+    data_file = output_dir + workload_baseType3s[i]
+    dram_only_file = output_dir + workload_dram_onlys[i]
 
     find1 = False
     find2 = False
     # print(data_file)
+    
+    if os.path.exists(dram_only_file):
+        f = open(dram_only_file, "r")
+        lines = f.read()
+        lines = lines.strip().split("\n")
+        line_i = -1
+        for line in lines:
+            line_i += 1
+            terms = line.split(":")
+            if terms[0] == "Core 0 stalls(mem)":
+                find2 = True
+                break
+        print(lines[line_i])
+        
+        if find2:
+            mem = 0
+            compute = 0
+            others = 0
+            for j in range(8):
+                for k in range(3):
+                    terms = lines[line_i+j*3+k].split(":")
+                    if k==0:
+                        mem += int(terms[1].strip())
+                    elif k==1:
+                        compute += int(terms[1].strip())
+                    else:
+                        compute += int(terms[1].strip())
+            fout_compute.write(str(compute)+" ")
+            fout_mem.write(str(mem)+" ")
+            # fout_others.write(str(others)+" ")
+            
+            line_i += 24
+    
+    
+    
     if os.path.exists(data_file):
         f = open(data_file, "r")
         lines = f.read()
@@ -59,7 +96,7 @@ for i in range(len(workloads)):
             mem = 0
             compute = 0
             others = 0
-            for j in range(4):
+            for j in range(8):
                 for k in range(3):
                     terms = lines[line_i+j*3+k].split(":")
                     if k==0:
@@ -72,40 +109,43 @@ for i in range(len(workloads)):
             fout_mem.write(str(mem)+" ")
             # fout_others.write(str(others)+" ")
             
-            line_i += 12
+            line_i += 24
+    
+    
+    fout_compute.write("\n\n")
+    # fout_others.write("\n\n")
+    fout_mem.write("\n\n")
         
-        for line in lines[line_i+1:]:
-            line_i += 1
-            terms = line.split(":")
-            if terms[0] == "Core 0 stalls(mem)":
-                find2 = True
-                break
-        print(lines[line_i])
+        # for line in lines[line_i+1:]:
+        #     line_i += 1
+        #     terms = line.split(":")
+        #     if terms[0] == "Core 0 stalls(mem)":
+        #         find2 = True
+        #         break
+        # print(lines[line_i])
         
         
-        if find2:
+        # if find2:
         
-            mem = 0
-            compute = 0
-            others = 0
-            for j in range(4):
-                for k in range(3):
-                    terms = lines[line_i+j*3+k].split(":")
-                    if k==0:
-                        mem += int(terms[1].strip())
-                    elif k==1:
-                        compute += int(terms[1].strip())
-                    else:
-                        compute += int(terms[1].strip())
-            fout_compute.write(str(compute)+" ")
-            fout_mem.write(str(mem)+" ")
-            # fout_others.write(str(others)+" ")
+        #     mem = 0
+        #     compute = 0
+        #     others = 0
+        #     for j in range(8):
+        #         for k in range(3):
+        #             terms = lines[line_i+j*3+k].split(":")
+        #             if k==0:
+        #                 mem += int(terms[1].strip())
+        #             elif k==1:
+        #                 compute += int(terms[1].strip())
+        #             else:
+        #                 compute += int(terms[1].strip())
+        #     fout_compute.write(str(compute)+" ")
+        #     fout_mem.write(str(mem)+" ")
+        #     # fout_others.write(str(others)+" ")
             
-            line_i += 12
+        #     line_i += 12
         
-            fout_compute.write("\n\n")
-            # fout_others.write("\n\n")
-            fout_mem.write("\n\n")
+            
         
         
         # # print(lines)

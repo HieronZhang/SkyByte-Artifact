@@ -24,10 +24,9 @@ Install the following dependencies (You can also run `pre_req.sh`):
 ```
 sudo apt update
 sudo apt-get install libboost-all-dev
-sudo apt install scons
-sudo apt install htop
+sudo apt install scons htop
 sudo apt upgrade g++
-pip3 install matplotlib networkx pandas PyPDF2
+pip3 install matplotlib networkx pandas PyPDF2 gdown scipy
 ```
 
 Build the simulator for SkyByte:
@@ -41,7 +40,15 @@ This section describes the steps to generate and run the necessasry experiments.
 
 ### 2.1 Preparing the multi-threaded instruction traces
 
-We prepared the instruction traces captured by Intel's PIN tool for the workloads we used in the paper. Download the traces from this [link](https://drive.google.com/drive/folders/1Rzdl-x3qfRp3hoL-K0OW_Tq6CuxIYcp0?usp=sharing). After uncompressing, make sure to put the ``skybyte_new_traces`` folder and the codebase (the ``SkyByte-Artifact`` folder) in the same directory. 
+We prepared the instruction traces captured by Intel's PIN tool for the workloads we used in the paper. Download the traces from google drive:
+
+```bash
+gdown 1wVEKYsCTQ29tsBiyPfKfTR_CSJvXJF0p
+tar -xvf skybyte_new_traces.tar.xz 
+```
+
+
+After uncompressing, make sure to put the ``skybyte_new_traces`` folder and the codebase (the ``SkyByte-Artifact`` folder) in the same directory. 
 
 ```bash
 the_outer_directory
@@ -50,7 +57,7 @@ the_outer_directory
 └── ...
 ```
 
-For every set of trace (e.g., the one for `bc` with 8 threads), there are one trace configuration file (`trace.txt`) and several raw trace files (`trace_XX.raw` files). The format of the trace files is the same as Macsim. See section 3.4 of `doc/macsim.pdf` for more details. 
+For every set of trace (e.g., the one for `bc` with 16 threads), there are one trace configuration file (`trace.txt`) and several raw trace files (`trace_XX.raw` files). The format of the trace files is the same as Macsim. See section 3.4 of `doc/macsim.pdf` for more details. 
 
 ### 2.2 Configuration Files
 
