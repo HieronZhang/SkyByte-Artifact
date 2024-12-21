@@ -424,7 +424,7 @@ int main(int argc, char** argv) {
   LRU_inactive_list.clear();
   
   
-
+  std::string bench_wmp = "../output/warmup_traces/" + bench;
   bench = "../output/" + bench;
   main_filename = bench;
 
@@ -469,9 +469,10 @@ int main(int argc, char** argv) {
       workload_name = workload_name.substr(0, last_dot);
   }
 
+  std::string warmup_trace_workload_name = "../output/warmup_traces/" + workload_name;
   workload_name = "../output/" + workload_name;
 
-  string workload_dram_prefill = workload_name + "_prefill_data.txt";
+  string workload_dram_prefill = warmup_trace_workload_name + "_prefill_data.txt";
 
 
   if (!dram_baseline) 
@@ -628,7 +629,7 @@ DRAM_profiling:
   }
   //Start the warmup pass!
 
-  FILE* warmup_hint_data_file = fopen((bench + "_warmup_hint_dram_system.txt").c_str(),"r");
+  FILE* warmup_hint_data_file = fopen((bench_wmp + "_warmup_hint_dram_system.txt").c_str(),"r");
   if (warmup_hint_data_file == NULL) //Need to run one time warmup with pinatrace
   {
     the_clock_pt = &the_clock;
@@ -770,13 +771,13 @@ DRAM_profiling:
       bytefs_log("Service threads stopped");
 
       //copy the caches in the DRAM subsystem
-      warmup_hint_data_file = fopen((bench + "_warmup_hint_dram_system.txt").c_str(),"w");
+      warmup_hint_data_file = fopen((bench_wmp + "_warmup_hint_dram_system.txt").c_str(),"w");
       copy_dram_system(warmup_hint_data_file);
 
       //TPP only: copy states in TPP system
       if (tpp_enable)
       {
-        FILE* warmup_hint_data_file_tpp = fopen((bench + "_warmup_hint_tpp_system.txt").c_str(),"w");
+        FILE* warmup_hint_data_file_tpp = fopen((bench_wmp + "_warmup_hint_tpp_system.txt").c_str(),"w");
         copy_tpp_system(warmup_hint_data_file_tpp);
         fclose(warmup_hint_data_file_tpp);
       }
@@ -826,7 +827,7 @@ DRAM_profiling:
       replay_dram_system(warmup_hint_data_file);
       if (tpp_enable)
       {
-        FILE* warmup_hint_data_file_tpp = fopen((bench + "_warmup_hint_tpp_system.txt").c_str(),"r");
+        FILE* warmup_hint_data_file_tpp = fopen((bench_wmp + "_warmup_hint_tpp_system.txt").c_str(),"r");
         replay_tpp_system(warmup_hint_data_file_tpp);
         fclose(warmup_hint_data_file_tpp);
       }
@@ -841,7 +842,7 @@ DRAM_profiling:
       ssd_backend_reset_timestamp();
 
 
-    FILE* warmup_hint_data_file_2 = fopen((bench + "_warmup_hint_data_wlog.txt").c_str(),"r");
+    FILE* warmup_hint_data_file_2 = fopen((bench_wmp + "_warmup_hint_data_wlog.txt").c_str(),"r");
     if (warmup_hint_data_file_2 == NULL && write_log_enable)
     {
       //Second time wram up run begins
@@ -915,7 +916,7 @@ DRAM_profiling:
         read_pgnum = read_write_num.first;
         write_pgnum = read_write_num.second;
       }
-      warmup_hint_data_file_2 = fopen((bench + "_warmup_hint_data_wlog.txt").c_str(),"w");
+      warmup_hint_data_file_2 = fopen((bench_wmp + "_warmup_hint_data_wlog.txt").c_str(),"w");
 
       fprintf(warmup_hint_data_file_2, "%ld\n", read_pgnum);
       fprintf(warmup_hint_data_file_2, "%ld\n", write_pgnum);

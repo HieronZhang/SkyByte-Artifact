@@ -96,10 +96,7 @@ for baseline in "${baselines[@]}"; do
       target_run_script="$target_folder/run_one.sh"
       cat > "$target_run_script" << EOF
 #!/bin/bash
-$emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name -d
 $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
 EOF
       chmod +x "$target_run_script"
       echo "$target_name" >> print.txt
@@ -138,9 +135,7 @@ for baseline in "${baselines[@]}"; do
       target_run_script="$target_folder/run_one.sh"
       cat > "$target_run_script" << EOF
 #!/bin/bash
-$emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name -d
 $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
 EOF
       chmod +x "$target_run_script"
       echo "$target_name" >> print.txt
@@ -185,10 +180,7 @@ for baseline in "${baselines[@]}"; do
       target_run_script="$target_folder/run_one.sh"
       cat > "$target_run_script" << EOF
 #!/bin/bash
-$emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name -d
 $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
 EOF
       chmod +x "$target_run_script"
       echo "$target_name" >> print.txt
@@ -233,9 +225,7 @@ for baseline in "${baselines[@]}"; do
       target_run_script="$target_folder/run_one.sh"
       cat > "$target_run_script" << EOF
 #!/bin/bash
-$emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name -d
 $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
-# $emulator -b $baseline -w $workload -o $tty_out -p -c 8 -f $workload_name-$baseline_name
 EOF
       chmod +x "$target_run_script"
       echo "$target_name" >> print.txt
