@@ -196,7 +196,7 @@ done
 
 
 baselines=( "$baselines_dir"/assd-C-rr.config "$baselines_dir"/assd-CP.config)
-workloads=( "$workloads_dir"/*24.config  "$workloads_dir"/*48.config)
+workloads=( "$workloads_dir"/*24.config )
 # settings=( "$settings_dir"/*.config )
 
 
