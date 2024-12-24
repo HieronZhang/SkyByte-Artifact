@@ -101,11 +101,11 @@ For convenience, we also provide the ``artifact_run.sh`` script, which automates
 ./artifact_run.sh
 ```
 
-The variable `MAX_CORES_NUM` in this script specifies the maximum allowed number of CPU cores for simulations. Users may need to adjust this value based on their own machine's specification before running the script.
+The variable `MAX_CORES_NUM` in this script specifies the maximum allowed number of CPU cores for simulations. Users need to adjust this value based on their own machine's specification before running the script. Please modify this number based on your machine's main memory capacity. One experiment process will need a peak memory of around 13 GB. We recommend reserving 15 GB for each process to ensure that the program won't crash. For example, if your machine has 128 GB of main memory, this number can be set as 8. (See line 5-10 of ``artifact_run.sh``)
 
 The artifact run.sh script performs the following tasks: 1. Creates multiple directories named
 ``bin-<workload>-<thread_num>-<baseline>`` for different experiments. 2. Sets up the corresponding
-trace file list file in each directory. 3. Generates a run one.sh script in each directory to facilitate running individual experiments. 4. Uses the run all.sh script to launch parallel experiments. See lines 23-29 of ``artifact_run.sh``:
+trace file list file in each directory. 3. Generates a run one.sh script in each directory to facilitate running individual experiments. 4. Uses the run all.sh script to launch parallel experiments. See lines 21-32 of ``artifact_run.sh``:
 
 ```
 # Setup experiment configurations for figure 2, 3, 4, 14, 15, 16, 17, 18, and Table 3

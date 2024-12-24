@@ -38,7 +38,7 @@ RERUN_FAILED=0
 RUN_VALID=0
 REMOVE_INVALID=0
 RM_EVERYTHING=0
-MAX_PROCESS_NUM=16
+MAX_CONCURRENT_RUN=8
 
 # W             3
 # WP            4
@@ -198,16 +198,16 @@ fi
 # flatflash(P)  3
 declare -A type_corenum_mapping
 type_corenum_mapping=(
-  ["assd-WP"]=4
-  ["assd-Full"]=4
-  ["assd-C"]=2
-  ["baseType3"]=2
-  ["flatflash"]=3
-  ["assd-W"]=3
-  ["assd-A"]=3
-  ["assd-CP"]=3
-  ["assd-CT"]=3
-  ["DRAM-only"]=2
+  ["assd-WP"]=1
+  ["assd-Full"]=1
+  ["assd-C"]=1
+  ["baseType3"]=1
+  ["flatflash"]=1
+  ["assd-W"]=1
+  ["assd-A"]=1
+  ["assd-CP"]=1
+  ["assd-CT"]=1
+  ["DRAM-only"]=1
 )
 
 progress_pipe_name="$scripts_folder/progress.pipe"
@@ -237,7 +237,7 @@ if [[ $RERUN_FAILED -ne 0 ]]; then
   fi
   mkfifo "$comm_pipe_name"
 
-  total_ncores=$(nproc)
+  total_ncores=$MAX_CONCURRENT_RUN
   used_ncores=0
 
   progress_report &
