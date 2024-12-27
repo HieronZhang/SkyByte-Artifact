@@ -715,5 +715,5 @@ void sa_cache::replay_snapshot(FILE* input_file){
         }
     }
     char line[100];
-    assert(fgets(line, 100, input_file));
+    fgets(line, 100, input_file);
 }
