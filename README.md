@@ -105,13 +105,16 @@ The variable `MAX_CORES_NUM` in this script specifies the maximum allowed number
 
 The artifact run.sh script performs the following tasks: 1. Creates multiple directories named
 ``bin-<workload>-<thread_num>-<baseline>`` for different experiments. 2. Sets up the corresponding
-trace file list file in each directory. 3. Generates a run one.sh script in each directory to facilitate running individual experiments. 4. Uses the run all.sh script to launch parallel experiments. See lines 21-32 of ``artifact_run.sh``:
+trace file list file in each directory. 3. Generates a run one.sh script in each directory to facilitate running individual experiments. 4. Uses the run all.sh script to launch parallel experiments. See lines 21-35 of ``artifact_run.sh``:
 
 ```
 # Setup experiment configurations for figure 2, 3, 4, 14, 15, 16, 17, 18, and Table 3
 ./run_full.sh
 # After running this, you will see a folder named bin-<workload_name>-<thread_num>-<baseline_name> for each experiment
 # In each folder, there is a script named run_one.sh, which is used to run the experiment
+
+# Clean up the previous pipe logs (not important for reviewers)
+rm *.pipe
 
 # Run experiments for figure figure 2, 3, 4, 14, 15, 16, 17, 18, and Table 3 concurrently with multiple cores
 ./run_all.sh -p "bc|tpcc|srad|radix|ycsb|dlrm|bfs-dense" -dr -j $MAX_CORES_NUM

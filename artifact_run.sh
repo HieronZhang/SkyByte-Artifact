@@ -27,6 +27,9 @@ tmux kill-server
 # After running this, you will see a folder named bin-<workload_name>-<thread_num>-<baseline_name> for each experiment
 # In each folder, there is a script named run_one.sh, which is used to run the experiment
 
+# Clean up the previous pipe logs (not important for reviewers)
+rm *.pipe
+
 # Run experiments for figure figure 2, 3, 4, 14, 15, 16, 17, 18, and Table 3 concurrently with multiple cores
 ./run_all.sh -p "bc|tpcc|srad|radix|ycsb|dlrm|bfs-dense" -dr -j $MAX_CORES_NUM
 # The time for running this could be long
