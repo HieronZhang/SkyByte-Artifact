@@ -13,7 +13,7 @@ sys.path.append(os.path.dirname(script_dir))
 from pyplotter.figure_utils.figure_utils import *
 
 normalize_base = None
-normalize_base = "8(Skybyte-WP)"
+normalize_base = "8"
 
 # hatch_color = "#78756e"
 hatch_color = "white"

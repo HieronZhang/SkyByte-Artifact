@@ -164,8 +164,8 @@ workloads = {
     "srad-48"      : "srad",
     "tpcc-8"       : "tpcc",
     "tpcc-24"      : "tpcc",
-    "ycsb-8"       : "ycsb-a",
-    "ycsb-24"      : "ycsb-a",
+    "ycsb-8"       : "ycsb",
+    "ycsb-24"      : "ycsb",
     # "ycsbB-8"       : "ycsb-b",
     # "ycsbB-24"      : "ycsb-b",
 }
@@ -180,6 +180,16 @@ if any([option in target_dir for option in ["e2e_perf", "nwrites", "mem_latency"
             "assd-C-rr" : "SkyByte-C",
             "assd-W"    : "SkyByte-W",
             "assd-CP"   : "SkyByte-CP",
+            "assd-WP"   : "SkyByte-WP",
+            "assd-Full-rr" : "SkyByte-Full",
+            "assd-WP-DRAM"   : "DRAM-Only"
+        }
+        
+    if "mem_latency" in target_dir:
+        settings = {
+            "baseType3" : "Base-CSSD",
+            "flatflash" : "SkyByte-P",
+            "assd-W"    : "SkyByte-W",
             "assd-WP"   : "SkyByte-WP",
             "assd-Full-rr" : "SkyByte-Full",
             "assd-WP-DRAM"   : "DRAM-Only"
@@ -245,10 +255,10 @@ if any([option in target_dir for option in ["e2e_perf", "nwrites", "mem_latency"
 
         result = dataset.get_data_slice([None, None, "core_exe_time_max"])
         result_names = dataset.get_setting_name_slice([None, None, "core_exe_time_max"])
-        with open(os.path.join(target_dir, "max.dat"), "w") as fout:
-            print(result_names)
-            print(result)
-            ldg.dump(result_names, result, fout)
+        # with open(os.path.join(target_dir, "max.dat"), "w") as fout:
+        print(result_names)
+        print(result)
+            # ldg.dump(result_names, result, fout)
             
     elif "alter_e2e_perf" in target_dir:
         result = dataset.get_data_slice([None, None, "core_exe_time_avg"]).astype(float)
@@ -300,7 +310,7 @@ if any([option in target_dir for option in ["e2e_perf", "nwrites", "mem_latency"
         flatflash_idx = result_names[0].index("SkyByte-P")
         basetype3_idx = result_names[0].index("Base-CSSD")
         # group_str_idx = ["bc", "dlrm", "radix"]
-        group_str_idx = ["bc", "radix"]
+        group_str_idx = ["dlrm", "radix"]
         group_int_idx = [result_names[1].index(str_idx) for str_idx in group_str_idx]
 
         # save for later use

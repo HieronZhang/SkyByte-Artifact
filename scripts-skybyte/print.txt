@@ -75,13 +75,6 @@ bin-radix-24-assd-C-rr
 bin-srad-24-assd-C-rr
 bin-tpcc-24-assd-C-rr
 bin-ycsb-24-assd-C-rr
-bin-bc-48-assd-C-rr
-bin-bfs-dense-48-assd-C-rr
-bin-dlrm-48-assd-C-rr
-bin-radix-48-assd-C-rr
-bin-srad-48-assd-C-rr
-bin-tpcc-48-assd-C-rr
-bin-ycsb-48-assd-C-rr
 bin-bc-24-assd-CP
 bin-bfs-dense-24-assd-CP
 bin-dlrm-24-assd-CP
@@ -89,10 +82,3 @@ bin-radix-24-assd-CP
 bin-srad-24-assd-CP
 bin-tpcc-24-assd-CP
 bin-ycsb-24-assd-CP
-bin-bc-48-assd-CP
-bin-bfs-dense-48-assd-CP
-bin-dlrm-48-assd-CP
-bin-radix-48-assd-CP
-bin-srad-48-assd-CP
-bin-tpcc-48-assd-CP
-bin-ycsb-48-assd-CP

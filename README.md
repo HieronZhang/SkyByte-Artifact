@@ -130,7 +130,7 @@ To evaluate the artifact results, simply run:
 
 This script gathers all the results from the `output` folder, and draws all the needed figures sequentially. A detailed description of each command and the output figures' positions is also included in this script.
 
-We provide the expected result data files and figures in the same directory where the figures will be generated. To verify the results, you can compare the generated figures directly with those presented in the paper, or compare the data for each figure with the example results we have provided.
+We provide the expected result data files and figures in the same directory where the figures will be generated. To verify the results, you can compare the generated figures directly with those presented in the paper, or compare the data for each figure with the example results we have provided. Note that our simulator is non-deterministic, so the figures may have slight differences from the ones in the paper.
 
 
 
