@@ -379,7 +379,7 @@ bool dram_ctrl_c::insert_new_req(mem_req_s* mem_req) {
       else
       {
         int thread_id = mem_req->m_thread_id;
-        Thread* current_thread = skybyte_scheduler_pt->get_thread(thread_id);
+        Thread* current_thread = skybyte_scheduler_pt->get_thread(0);
         current_thread->last_latency = resp.latency;
         current_thread->running_avg_ltc = (current_thread->running_avg_ltc*current_thread->num_instruction + resp.latency) / (current_thread->num_instruction+1);
 
