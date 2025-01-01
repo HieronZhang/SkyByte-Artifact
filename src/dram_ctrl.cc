@@ -746,7 +746,7 @@ void dram_ctrl_c::send(void) {
         if (prefill_pass || req->m_type==Mem_Req_Type_enum::MRT_IFETCH || req->m_type==Mem_Req_Type_enum::MRT_IPRF)
         {
           int thread_id = req->m_thread_id;
-          Thread* current_thread = skybyte_scheduler_pt->get_thread(thread_id);
+          Thread* current_thread = skybyte_scheduler_pt->get_thread(0);
 
           current_thread->last_latency = last_latency;
 
