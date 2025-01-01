@@ -120,6 +120,7 @@ extern const uint64_t ctx_swh_deadtime_nano;
 extern Thread_Policy_enum t_policy;
 
 bool use_macsim = true;
+bool warmed_up_mode = true;
 bool pinatrace_drive = false;
 extern sim_clock* the_clock_pt;
 unordered_set<uint64_t> prefill_pages;
@@ -424,7 +425,7 @@ int main(int argc, char** argv) {
   LRU_inactive_list.clear();
   
   
-  std::string bench_wmp = "../output/warmup_traces/" + bench;
+  std::string bench_wmp = warmed_up_mode ? ("../output/warmup_traces/" + bench) : ("../output/" + bench);
   bench = "../output/" + bench;
   main_filename = bench;
 

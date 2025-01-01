@@ -218,7 +218,7 @@ public:
   /*! \fn Counter check_forward_progress()
    *  \brief Function to check forward progress
    */
-  void check_forward_progress();
+  Counter check_forward_progress();
 
   /*! \fn void start(void)
    *  \brief Functio to start core simulation

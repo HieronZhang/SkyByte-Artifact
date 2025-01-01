@@ -941,6 +941,8 @@ int macsim_c::run_a_cycle() {
   }
 #endif /* USING_SST */
 
+  Counter curr_acc_retired_insts = 0;
+
   // core execution loop
   for (int kk = 0; kk < m_num_sim_cores; ++kk) {
     // use pivot to randomize core run_cycle pattern
@@ -1013,7 +1015,8 @@ int macsim_c::run_a_cycle() {
       core->check_heartbeat(false);
 
       // forward progress check in every cycles
-      core->check_forward_progress();
+      Counter inst_con = core->check_forward_progress();
+      curr_acc_retired_insts += inst_con;
     }
 
     // when a core has been completed, do last print heartbeat
@@ -1042,6 +1045,23 @@ int macsim_c::run_a_cycle() {
       m_domain_next[ii] = 0;
     }
   }
+
+
+  if (curr_acc_retired_insts != this->acc_retired_insts)
+  {
+    this->acc_retired_insts = curr_acc_retired_insts;
+    this->acc_nooped_cycles = 0;
+  }
+  else
+  {
+    this->acc_nooped_cycles++;
+  }
+  
+  if (this->acc_nooped_cycles > 500000000)
+  {
+    return 0;   //Another exit condition to ensure that the simulation ends properly
+  }  
+
 
   return 1;  // simulation not finished
 }

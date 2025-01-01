@@ -604,7 +604,7 @@ void core_c::core_heartbeat(bool final) {
 }
 
 // check forward progress of the simulation
-void core_c::check_forward_progress() {
+Counter core_c::check_forward_progress() {
   // get total retired instruction count
   Counter inst_count = m_retire->get_total_insts_retired();
 
@@ -664,6 +664,7 @@ void core_c::check_forward_progress() {
   //           m_core_id, m_core_cycle_count, m_simBase->m_simulation_cycle,
   //           m_last_forward_progress, m_last_terminated_tid, m_last_inst_count);
   // }
+  return inst_count;
 }
 
 

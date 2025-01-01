@@ -202,6 +202,8 @@ public:
 
 public:
   uint64_t m_hmc_trans_id_gen;
+  Counter acc_nooped_cycles = 0;
+  Counter acc_retired_insts = 0;
   int m_num_active_threads; /**< number of active threads */
   int
     m_num_waiting_dispatched_threads; /**< number of threads waiting for begin dispatched */
