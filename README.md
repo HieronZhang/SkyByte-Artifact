@@ -14,7 +14,10 @@ This artifact can run on any x86 machine with at least 32 GB of RAM and at least
 
 Use the following command to download the artifact:
 ```
-# TODO (Zenodo)
+# To Download from Zenodo
+# wget https://zenodo.org/records/14660185/files/SkyByte-Artifact.tar.gz
+
+# To Download from Github
 git clone git@github.com:HieronZhang/SkyByte-Artifact.git
 ```
 
@@ -43,8 +46,8 @@ This section describes the steps to generate and run the necessasry experiments.
 We prepared the instruction traces captured by Intel's PIN tool for the workloads we used in the paper. Download the traces from google drive:
 
 ```bash
-gdown 1wVEKYsCTQ29tsBiyPfKfTR_CSJvXJF0p
-tar -xvf skybyte_new_traces.tar.xz 
+wget https://zenodo.org/records/14660185/files/skybyte_new_traces.tar.gz
+tar -xvf skybyte_new_traces.tar.gz 
 ```
 
 
